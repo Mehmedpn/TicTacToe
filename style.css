@@ -1,0 +1,70 @@
+body {
+    background-color: #444;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 80px;
+    height: 100vh;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 40px;
+    cursor: pointer;
+    border: 0;
+}
+
+td:hover {
+    background-color: #fffefe2c;
+    transition: background-color 0.3s ease;
+}
+
+/* Nur innere Linien zeichnen */
+td:not(:last-child) {
+    border-right: 5px solid white;
+}
+
+tr:not(:last-child) td {
+    border-bottom: 5px solid white;
+}
+
+.winning-line {
+    position: absolute;
+    height: 6px;
+    background-color: rgb(237, 227, 39); /* Farbe der Linie */
+    border-radius: 3px; /* Abgerundete Ecken */
+    transform-origin: left center;
+    z-index: 1000;
+    transition: width 0.6s ease-out;
+    pointer-events: none; /* Verhindert Interaktionen mit der Linie */
+    box-shadow: 0 0 10px rgba(237, 227, 39, 0.7); /* Schatten hinzufügen */
+}
+
+#restart-container {
+    margin-top: 20px;
+}
+
+#restart-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#restart-button:hover {
+    background-color: #218838;
+}

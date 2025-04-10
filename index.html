@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tic Tac Toe Game with SVG animations. Play against the computer or a friend.">
+    <meta name="keywords" content="Tic Tac Toe, SVG, Game, Animation, JavaScript">
+    <meta name="author" content="Mehmed">
+    <meta name="theme-color" content="#000000">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body onload="init()">
+    <h1>Tic Tac Toe</h1>
+    <div id="content"></div>
+
+    <template id="circle-template">
+        <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="35" cy="35" r="30" stroke="white" stroke-width="5" fill="none" />
+            <circle cx="35" cy="35" r="30" stroke="lightblue" stroke-width="5" fill="none" stroke-dasharray="188.4956"
+                stroke-dashoffset="188.4956" transform="rotate(-90 35 35)">
+                <animate attributeName="stroke-dashoffset" from="188.4956" to="0" dur="500ms" fill="freeze"
+                    begin="0s" />
+            </circle>
+        </svg>
+    </template>
+
+    <template id="cross-template">
+        <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+            <line x1="10" y1="10" x2="60" y2="60" stroke="gold" stroke-width="5" stroke-linecap="round"
+                stroke-dasharray="70" stroke-dashoffset="70">
+                <animate attributeName="stroke-dashoffset" from="70" to="0" dur="0.2s" fill="freeze" />
+            </line>
+            <line x1="10" y1="60" x2="60" y2="10" stroke="gold" stroke-width="5" stroke-linecap="round"
+                stroke-dasharray="70" stroke-dashoffset="70">
+                <animate attributeName="stroke-dashoffset" from="70" to="0" dur="0.2s" begin="0.2s" fill="freeze" />
+            </line>
+        </svg>
+    </template>
+
+    <div id="restart-container" style="display: none;">
+        <button id="restart-button" onclick="restartGame()">Neustart</button>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
