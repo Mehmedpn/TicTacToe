@@ -6,9 +6,12 @@ let fields = [
 
 let currentShape = 'circle';
 let gameOver = false;
+let scoreCircle = 0;
+let scoreCross = 0;
 
 function init() {
     render();
+    document.getElementById("restart-container").style.display = "none"; // Neustart-Button verbergen
 }
 
 function render() {
@@ -36,7 +39,6 @@ function handleClick(index, element) {
     if (fields[index] !== null || gameOver) return;
 
     fields[index] = currentShape;
-
     element.innerHTML = generateSymbol(currentShape);
     element.onclick = null;
 
@@ -44,10 +46,18 @@ function handleClick(index, element) {
     if (result) {
         gameOver = true;
         drawWinningLine(result);
+        updateScore(currentShape);
+        showStatusMessage(`${currentShape === 'circle' ? 'Kreis' : 'Kreuz'} gewinnt!`);
+        document.getElementById("restart-container").style.display = "block";
+    } else if (!fields.includes(null)) {
+        gameOver = true;
+        showStatusMessage("Unentschieden!");
+        document.getElementById("restart-container").style.display = "block";
     }
 
     currentShape = currentShape === 'circle' ? 'cross' : 'circle';
 }
+
 
 function generateCircle() {
     return document.getElementById("circle-template").innerHTML;
@@ -72,46 +82,83 @@ function checkWin() {
 function drawWinningLine(combo) {
     const tdElements = document.querySelectorAll("td");
 
-    // Funktion, um den Mittelpunkt eines Feldes zu berechnen
-    const p1 = getCenter(combo[0]); // Mittelpunkt des ersten Feldes
-    const p2 = getCenter(combo[2]); // Mittelpunkt des dritten Feldes
+    // Berechne die Mitte des ersten und letzten Feldes der Gewinnkombination
+    const p1 = getCenter(combo[0]);
+    const p2 = getCenter(combo[2]);
 
-    // Berechnung der Distanz und des Winkels zwischen den beiden Mittelpunkten
+    // Berechne die Länge und den Winkel der Linie
     const length = Math.hypot(p2.x - p1.x, p2.y - p1.y);
     const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
 
+    // Erstelle eine Linie
     const line = document.createElement("div");
     line.className = "winning-line";
 
-    // Setze die Position der Linie am ersten Punkt
     line.style.left = `${p1.x}px`;
     line.style.top = `${p1.y}px`;
-
-    // Drehe die Linie so, dass sie zwischen den beiden Punkten passt
     line.style.transform = `rotate(${angle}rad)`;
-
-    // Start mit einer Breite von 0px, damit wir die Animation triggern können
     line.style.width = "0px";
-    document.body.appendChild(line);
 
-    // Triggern der Animation für die Linie, damit sie die richtige Länge bekommt
+    // Füge die Linie zum Spielfeld hinzu
+    document.getElementById("content").appendChild(line);
+
+    // Animationsstart
     requestAnimationFrame(() => {
-        line.style.width = `${length}px`; // Endbreite der Linie
+        line.style.width = `${length}px`;
     });
 }
 
-// Funktion, um den Mittelpunkt eines Feldes zu berechnen
+
 function getCenter(index) {
     const tdElements = document.querySelectorAll("td");
     const rect = tdElements[index].getBoundingClientRect();
+    const contentRect = document.getElementById("content").getBoundingClientRect();
+
+    // Korrektur: Relative Position zu Gesamtbereich der Tische
     return {
-        x: rect.left + rect.width / 2 + window.scrollX,
-        y: rect.top + rect.height / 2 + window.scrollY
+        x: rect.left - contentRect.left + rect.width / 2,
+        y: rect.top - contentRect.top + rect.height / 2
     };
 }
+
 
 function generateSymbol(shape) {
     return shape === 'circle' ? generateCircle() : generateCross();
 }
+
+// Neustart-Funktion
+function restartGame() {
+    fields = [null, null, null, null, null, null, null, null, null];
+    currentShape = 'circle';
+    gameOver = false;
+    document.getElementById("restart-container").style.display = "none";
+    document.getElementById("status-message").innerText = ""; // Nachricht zurücksetzen
+    removeWinningLine(); // falls nötig
+    render();
+}
+
+
+let score = {
+    circle: 0,
+    cross: 0
+};
+
+function updateScore(winner) {
+    score[winner]++;
+    document.getElementById(`score-${winner}`).innerText = score[winner];
+}
+
+function showStatusMessage(message) {
+    document.getElementById("status-message").innerText = message;
+}
+
+function removeWinningLine() {
+    const line = document.querySelector('.winning-line');
+    if (line) {
+        line.remove();
+    }
+}
+
+
 
 init();

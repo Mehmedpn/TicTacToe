@@ -2,13 +2,13 @@ body {
     background-color: #444;
     font-family: 'Open Sans', sans-serif;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 80px;
-    height: 100vh;
     margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 table {
@@ -23,6 +23,11 @@ td {
     font-size: 40px;
     cursor: pointer;
     border: 0;
+}
+
+
+h1{
+    font-size: 50px;
 }
 
 td:hover {
@@ -51,6 +56,7 @@ tr:not(:last-child) td {
     box-shadow: 0 0 10px rgba(237, 227, 39, 0.7); /* Schatten hinzufügen */
 }
 
+
 #restart-container {
     margin-top: 20px;
 }
@@ -67,4 +73,34 @@ tr:not(:last-child) td {
 
 #restart-button:hover {
     background-color: #218838;
+}
+
+#game-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px; /* Abstand zwischen Scoreboard und Spiel */
+}
+
+
+#scoreboard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #f0f0f0;
+    min-width: 100px;
+    text-align: left;
+}
+
+#game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#content {
+    display: flex;
+    justify-content: center;
+    position: relative; /* Fügt relative Positionierung hinzu */
 }

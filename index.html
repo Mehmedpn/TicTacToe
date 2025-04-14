@@ -14,7 +14,22 @@
 
 <body onload="init()">
     <h1>Tic Tac Toe</h1>
-    <div id="content"></div>
+
+    <div id="game-container">
+
+        <div id="scoreboard">
+            <div>⭕ <span id="score-circle">0</span></div>
+            <div>❌ <span id="score-cross">0</span></div>
+        </div>
+
+        <div id="game-wrapper">
+            <div id="content"></div>
+        </div>
+
+    </div>
+
+    <div id="status-message" style="margin-top: 20px; font-size: 20px;"></div>
+
 
     <template id="circle-template">
         <svg width="70" height="70" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
